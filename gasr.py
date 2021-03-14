@@ -31,7 +31,10 @@ class SodaClient():
         self.config = SodaConfig(cfg_serialized, len(cfg_serialized), callback, None)
 
     def start(self):
-        self.handle = self.sodalib.CreateExtendedSodaAsync(self.config)
+        self.sodalib.CreateExtendedSodaAsync.restype = ctypes.c_void_p
+        self.handle = ctypes.c_void_p(
+            self.sodalib.CreateExtendedSodaAsync(self.config)
+        )
         self.sodalib.ExtendedSodaStart(self.handle)
         while True:
             audio = sys.stdin.buffer.read(CHUNK_SIZE)
