@@ -10,7 +10,7 @@ CHUNK_SIZE = 2048 # 2 chunks per frame, a frame is a single s16
 CALLBACK = ctypes.CFUNCTYPE(None, ctypes.POINTER(ctypes.c_byte), ctypes.c_int, ctypes.c_void_p)
 class SodaConfig(ctypes.Structure):
     _fields_ = [('soda_config', ctypes.c_char_p),
-                ('soda_config_size', ctypes.c_int),
+                ('soda_config_size', ctypes.c_int64 if sys.platform == 'darwin' else ctypes.c_int),
                 ('callback', CALLBACK),
                 ('callback_handle', ctypes.c_void_p)]
 
